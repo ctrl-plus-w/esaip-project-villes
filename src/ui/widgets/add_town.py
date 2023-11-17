@@ -12,7 +12,7 @@ class AddTownWidget( QWidget ):
         self.setLayout( self.layout )
 
         # Insert town name
-        self.town_label = QLabel("Nom de la ville: ")
+        self.town_label = QLabel( "Nom de la ville: " )
         self.town_prompt = QLineEdit()
         self.layout.addWidget( self.town_label, 0, 0 )
         self.layout.addWidget( self.town_prompt, 0, 1)
