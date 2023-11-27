@@ -56,7 +56,7 @@ def is_valid(cities, lat: float, lng: float) -> bool:
     return min_lat <= lat <= max_lat and lng >= min_lng and lng <= max_lng
 
 
-def get_cities_as_coordinates(cities, width: int, height: int):
+def get_cities_as_coordinates(cities, width: int, height: int) -> dict:
     min_lat, max_lat, min_lng, max_lng = get_min_max_lat_lng(cities)
 
     scale_y = interp1d([min_lat, max_lat], [width, 0])

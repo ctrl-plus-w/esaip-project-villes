@@ -24,7 +24,3 @@ def add_city(ville, latitude, longitude):
         file.write(f"{ville.ljust(30)}{str(latitude_decimal).ljust(10)}{latitude.ljust(16)}{str(longitude_decimal).ljust(11)}{longitude}\n")
 
     print(f"Les coordonnées pour la ville de {ville} ont été ajoutées au fichier.")
-
-coordonnees_converties = convert("48° 22'N")
-print(coordonnees_converties)
-add_city("Roen", "48° 22'N", "4° 30'W")

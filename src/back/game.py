@@ -1,6 +1,6 @@
-from parse import parse_cities
+from src.back.parse import parse_cities
 from random import choice
-from find_city import find_city_with_coordonates
+from src.back.find_city import find_city_with_coordonates
 
 class Game:
 
@@ -9,7 +9,7 @@ class Game:
         self.coups_restants = 20
         self.score = 0
 
-        self.villes = parse_cities( "../assets/villes.txt" )
+        self.villes = parse_cities( "src/assets/villes.txt" )
 
     def play_round( self ):
         liste = list ( self.villes.keys() )
@@ -17,7 +17,7 @@ class Game:
 
         self.coups_restants -= 1
 
-        return self.ville
+        return self.ville, self.coups_restants + 1, self.score 
 
     def check_answer( self, coords_clique ) -> bool:
 
@@ -29,15 +29,8 @@ class Game:
         
         return False
 
-    def status( self ) -> dict:
-
-        info = {
-            "coups_restants" : self.coups_restants,
-            "score" : self.score,
-            "last_city" : self.ville
-        }
-
-        return info
+    def get( self ) -> dict:
+        return self.ville, self.coups_restants + 1, self.score 
     
 game = Game()
 game.play_round()
