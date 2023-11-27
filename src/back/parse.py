@@ -1,4 +1,25 @@
+import os
+
 from scipy.interpolate import interp1d
+
+
+def get_available_cities():
+    filenames = os.listdir('src/assets')
+    filenames = list(filter(lambda f: f.endswith('.gif'), filenames))
+
+    def get_size(name: str):
+        name = name.split('_')[-1]
+        name = name.split('.')[0]
+
+        width, height = name.split('x')
+        return int(width), int(height)
+
+    files = list(map(lambda f: (
+        {"filename": f, "label": 'x'.join(list(map(str, get_size(f)))), "width": get_size(f)[0],
+         "height": get_size(f)[1]}),
+                     filenames, ))
+
+    return files
 
 
 def parse_cities(path: str):
@@ -15,7 +36,7 @@ def parse_cities(path: str):
     return villes_coords
 
 
-def get_cities_as_coordinates(cities):
+def get_cities_as_coordinates(cities, width: int, height: int):
     cities["NorthWest"] = ({"lat": 52, "lng": -5.5})
     cities["SouthEst"] = ({"lat": 41, "lng": 10.5})
 
@@ -27,8 +48,8 @@ def get_cities_as_coordinates(cities):
     min_lng = min(lngs)
     max_lng = max(lngs)
 
-    scale_y = interp1d([min_lat, max_lat], [494, 0])
-    scale_x = interp1d([min_lng, max_lng], [0, 516])
+    scale_y = interp1d([min_lat, max_lat], [width, 0])
+    scale_x = interp1d([min_lng, max_lng], [0, height])
 
     for city, coords in cities.items():
         y = scale_y(coords["lat"])
