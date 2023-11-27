@@ -24,5 +24,5 @@ class DimensionWidget( QWidget ):
         self.layout.addWidget( self.town_label, 0, 0)
         self.layout.addWidget( self.town_selector, 0, 1 )
     
-    def get_size( self ):
-        return self.interface_selector.currentText()
+    def get_size( self ) -> list:
+        return list(map(int, self.interface_selector.currentText().split("x")))

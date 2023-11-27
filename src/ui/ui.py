@@ -2,6 +2,7 @@
 import qdarktheme, sys
 from src.ui.widgets.dimension import DimensionWidget
 from src.ui.widgets.add_town import AddTownWidget
+from src.ui.widgets.image import ImageWidget
 
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
@@ -25,7 +26,10 @@ class MainWindow( QMainWindow ):
 
         # Dimension
         self.dimension = DimensionWidget()
-        self.add_town = AddTownWidget() 
+        self.add_town = AddTownWidget()
+        import os
+        print(os.getcwd())
+        self.image = ImageWidget( "src/assets/map_france_494x516.gif", 496, 516 )
 
         # Widget
         widget = QWidget()
@@ -33,7 +37,8 @@ class MainWindow( QMainWindow ):
 
         layout = QVBoxLayout()
         widget.setLayout( layout )
-        layout.addWidget( self.add_town )
+        #layout.addWidget( self.add_town )
+        layout.addWidget( self.image )
 
 def main():
     """

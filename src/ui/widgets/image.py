@@ -4,13 +4,12 @@ from PyQt5.QtGui import QPixmap
 
 class ImageWidget( QWidget ):
     
-    def __init__( self, image_path ):
+    def __init__( self, image_path, width, height ):
 
         super( QWidget, self ).__init__()
 
         self.lb = QLabel( self )
         pixmap = QPixmap( image_path )
 
-        self.lb.resize( self.width(), self.height() )
-        self.lb.setPixmap( pixmap.scaled( self.lb.size(), Qt.IgnoreAspectRatio ) )
-        #self.show()
+        self.lb.resize( width, height )
+        self.lb.setPixmap( pixmap.scaled( width, height ) )
