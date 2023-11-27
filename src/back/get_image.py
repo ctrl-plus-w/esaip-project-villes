@@ -26,6 +26,7 @@ def get_city_image(city_name):
     image = Image.open(BytesIO(response_image.content))
     image.show()
 
-# Exemple d'utilisation
-city_name = "Paris"  # Remplacez par le nom de la ville souhaité
-get_city_image(city_name)
+if __name__ == "__main__":
+    # Exemple d'utilisation
+    city_name = "Paris"  # Remplacez par le nom de la ville souhaité
+    get_city_image(city_name)
