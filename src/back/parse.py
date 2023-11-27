@@ -3,12 +3,10 @@ def parsing(path: str):
         villes_coords = {}
 
         for line in file:
-            data = line.split()
-            ville = data[0]
+            name = line[:30].strip()
+            lat = line[30:36]
+            lng = line[53:63]
 
-            lat = data[1]
-            lng = data[4]
-
-            villes_coords[ville] = {"lat": lat, "lng": lng}
+            villes_coords[name] = {"lat": float(lat), "lng": float(lng)}
 
     return villes_coords
