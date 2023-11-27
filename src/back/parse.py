@@ -1,5 +1,5 @@
-def parsing():
-    with open('villes.txt', 'r') as file:
+def parsing(path: str):
+    with open(path, 'r') as file:
         villes_coords = {}
         for line in file:
             data = line.split()
