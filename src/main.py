@@ -20,6 +20,7 @@ drop.pack()
 img = ImageTk.PhotoImage(Image.open(f"src/assets/map_france_{selected_city.get()}.gif"))
 
 canvas = None
+highlighted = []  # { "x": int, "y": int }
 
 
 def draw_canvas():
@@ -41,16 +42,21 @@ def draw_canvas():
 
     cities_data = get_cities_as_coordinates(parse_cities('src/assets/villes.txt'), width, height)
 
+    def draw_oval(x: int, y: int, radius: int, color: str, width: int):
+        canvas.create_oval(x - radius / 2, y - radius / 2, x + radius / 2, y + radius / 2, width=width, outline=color)
+
     for city, coords in cities_data.items():
-        radius = 10
-        x = coords["x"]
-        y = coords["y"]
+        draw_oval(coords["x"], coords["y"], 10, "#FF0000", 1)
 
-        canvas.create_oval(x - radius / 2, y - radius / 2, x + radius / 2, y + radius / 2, outline="#ff0000")
+    for coords in highlighted:
+        draw_oval(coords["x"], coords["y"], 15, "#0000FF", 3)
 
 
-button = tk.Button(root, text="Update the city", command=lambda: draw_canvas())
-button.pack()
+def on_selected_city_update(_, __, ___):
+    draw_canvas()
+
+
+selected_city.trace('w', on_selected_city_update)
 
 draw_canvas()
 
