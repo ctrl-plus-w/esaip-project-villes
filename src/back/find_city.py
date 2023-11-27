@@ -10,7 +10,7 @@ def find_city(city):
         raise Exception
 
 def find_city_with_coordonates(lat: float, lng: float):
-    dictionnaire = parsing("src/assets/villes.txt")
+    dictionnaire = parse_cities("src/assets/villes.txt")
     for key in dictionnaire:
         if dictionnaire[key]["lat"] == lat and dictionnaire[key]["lng"] == lng:
             return key
