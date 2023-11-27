@@ -1,8 +1,4 @@
-import os
+from src.ui.ui import main
 
-from src.classes.parser import Parser
-
-
-data = Parser.retrieve_data("./src/assets/villes.txt")
-parser = Parser(data)
-print(parser.parse())
+if __name__ == '__main__':
+    main()
