@@ -1,3 +1,4 @@
+
 import qdarktheme, sys
 from src.ui.widgets.dimension import DimensionWidget
 from src.ui.widgets.add_town import AddTownWidget
