@@ -27,8 +27,6 @@ class MainWindow( QMainWindow ):
         # Dimension
         self.dimension = DimensionWidget()
         self.add_town = AddTownWidget()
-        import os
-        print(os.getcwd())
         self.image = ImageWidget( "src/assets/map_france_494x516.gif", 496, 516 )
 
         # Widget

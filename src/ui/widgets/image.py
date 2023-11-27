@@ -13,3 +13,19 @@ class ImageWidget( QWidget ):
 
         self.lb.resize( width, height )
         self.lb.setPixmap( pixmap.scaled( width, height ) )
+
+
+        self.print_point( [ 100, 100 ] )
+        self.print_point( [ 200, 200 ] )
+        self.print_point( [ 300, 300 ] )
+    
+    def print_point( self, coords ) -> None:
+        """
+        Print a point on the image.
+        Coords is a list of 2 elements, the first is the x coordinate and the second is the y coordinate.
+        """
+        
+        self.p = QPoint()
+
+        self.p.setX( coords[ 0 ] )
+        self.p.setY( coords[ 1 ] )
