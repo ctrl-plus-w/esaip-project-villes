@@ -1,3 +1,6 @@
 Pillow
 scipy
 geopy
+google_images_search
+requests
+bs4

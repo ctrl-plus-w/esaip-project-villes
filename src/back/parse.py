@@ -3,7 +3,7 @@ import os
 from scipy.interpolate import interp1d
 
 
-def get_available_cities():
+def get_available_city_files():
     filenames = os.listdir('src/assets')
     filenames = list(filter(lambda f: f.endswith('.gif'), filenames))
 
@@ -53,7 +53,7 @@ def get_min_max_lat_lng(cities):
 
 def is_valid(cities, lat: float, lng: float) -> bool:
     min_lat, max_lat, min_lng, max_lng = get_min_max_lat_lng(cities)
-    return min_lat <= lat <= max_lat and lng >= min_lng and lng <= max_lng
+    return min_lat <= lat <= max_lat and min_lng <= lng <= max_lng
 
 
 def get_cities_as_coordinates(cities, width: int, height: int) -> dict:
