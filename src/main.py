@@ -1,12 +1,11 @@
 import tkinter as tk
 from tkinter import ttk
-from src.back.add_city import add_city as add_city_back
-from src.back.find_city import find_city
-from src.back.game import Game
-from time import sleep
 
 from PIL import Image, ImageTk
 
+from src.back.add_city import add_city as add_city_back
+from src.back.find_city import find_city
+from src.back.game import Game
 from src.back.parse import get_available_cities, get_cities_as_coordinates, parse_cities
 
 root = tk.Tk()
@@ -36,6 +35,7 @@ img = ImageTk.PhotoImage(Image.open(f"src/assets/map_france_{selected_dimension.
 canvas = None
 width, height = None, None
 highlighted = []  # { "x": int, "y": int }
+
 
 def draw_canvas():
     global canvas
@@ -71,23 +71,31 @@ def draw_canvas():
 def on_selected_dimension_update(_, __, ___):
     draw_canvas()
 
+
 def on_selected_city_atlas_update(_, __, ___):
     global highlighted
-    
-    # Get the city lng and lat
+    global width
+    global height
+
+    #  Get the city lng and lat
     cities = {
-        selected_city_atlas.get() : find_city(selected_city_atlas.get())
+        selected_city_atlas.get(): find_city(selected_city_atlas.get()),
+        "NorthWest": ({"lat": 52, "lng": -5.5}),
+        "SouthEst": ({"lat": 41, "lng": 10.5})
     }
-    cities_data = get_cities_as_coordinates( cities, width, height )
-    
+
+    cities_data = get_cities_as_coordinates(cities, width, height)
+    print(cities_data)
+
     # Convert gps coordinates to x,y points on the map 
     highlighted = [{
-        "x" : cities_data[selected_city_atlas.get()]['x'],
-        "y" : cities_data[selected_city_atlas.get()]['y']
+        "x": cities_data[selected_city_atlas.get()]['x'],
+        "y": cities_data[selected_city_atlas.get()]['y']
     }]
 
     # Draw points of the map again
     draw_canvas()
+
 
 def play_game():
     win = tk.Toplevel()
@@ -104,26 +112,28 @@ def play_game():
         label = tk.Label(win, text=f"Situez {city} sur la carte\nCoups restants: {coups}\nScore: {score}")
         label.pack()
 
-        # Abandonner button
+        #  Abandonner button
         surrender = ttk.Button(win, text="Abandonner", command=win.destroy)
         surrender.pack()
 
         # Wait for the user to click a city
-        #sleep(10)
+        # sleep(10)
 
-    # Show game stats, re-create the window
+    #  Show game stats, re-create the window
     win.destroy()
     win = tk.Toplevel()
     win.wm_title("Window")
 
     _, coups, score = game.get()
-    label = tk.Label(win, text=f"Vous avez trouvé {score} villes sur 20\nCela correspond à {score / 20 * 100} % de réussite")
-    
-    # Buttons
-    #play_again = ttk.Button(win, text='Rejouer', command=play_game)
-    #play_again.grid(row=0, column=1) 
+    label = tk.Label(win,
+                     text=f"Vous avez trouvé {score} villes sur 20\nCela correspond à {score / 20 * 100} % de réussite")
+
+    #  Buttons
+    # play_again = ttk.Button(win, text='Rejouer', command=play_game)
+    # play_again.grid(row=0, column=1)
     quit = ttk.Button(win, text="Quitter le jeu", command=win.destroy)
     quit.grid(row=0, column=0)
+
 
 def add_city():
     win = tk.Toplevel()
@@ -134,7 +144,7 @@ def add_city():
     city_label.grid(row=0, column=0)
     city_entry = tk.Entry(win)
     city_entry.grid(row=0, column=1)
-    
+
     # Latitude    
     latitude_label1 = tk.Label(win, text="Latitude")
     latitude_label1.grid(row=1, column=0)
@@ -147,7 +157,7 @@ def add_city():
     latitude_label3 = tk.Label(win, text="'N")
     latitude_label3.grid(row=1, column=4)
 
-    # Longitude
+    #  Longitude
     longitude_label = tk.Label(win, text="Longitude")
     longitude_label.grid(row=2, column=0)
     longitude_entry = tk.Entry(win)
@@ -158,10 +168,10 @@ def add_city():
     longitude_entry2.grid(row=2, column=3)
 
     # Dropdown menu options
-    options = [ "W", "E" ]
+    options = ["W", "E"]
 
     selected_direction = tk.StringVar()
-    selected_direction.set( options[ 0 ] )
+    selected_direction.set(options[0])
 
     # Create Dropdown menu
     drop = tk.OptionMenu(win, selected_direction, *options)
@@ -172,12 +182,13 @@ def add_city():
         city_entry.get(),
         f"{latitude_entry.get()}° {latitude_entry2.get()}'N",
         f"{longitude_entry.get()}° {longitude_entry2.get()}'{selected_direction}"
-    ) )
+    ))
     save.grid(row=4, column=0)
 
     # Exit button
     b = ttk.Button(win, text="Exit", command=win.destroy)
     b.grid(row=4, column=1)
+
 
 # New city button
 button_add_map = tk.Button(root, text="Add a new city", command=add_city)
