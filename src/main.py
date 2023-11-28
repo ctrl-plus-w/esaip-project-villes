@@ -36,6 +36,10 @@ canvas = None
 width, height = None, None
 highlighted = []  # { "x": int, "y": int }
 
+# Variable storing the value of the clicked city name
+# -> Used to show the city name on top of its pin
+clicked_city = None
+
 
 def draw_canvas():
     global canvas
@@ -59,10 +63,24 @@ def draw_canvas():
     cities_data = get_cities_as_coordinates(parse_cities('src/assets/villes.txt'), width, height)
 
     def draw_oval(x: int, y: int, radius: int, color: str, width: int):
-        canvas.create_oval(x - radius / 2, y - radius / 2, x + radius / 2, y + radius / 2, width=width, outline=color)
+        return canvas.create_oval(x - radius / 2, y - radius / 2, x + radius / 2, y + radius / 2, width=width,
+                                  outline=color, fill="#FFFFFF")
+
+    def on_city_click(city: str):
+        def inner(arg):
+            global clicked_city
+            clicked_city = city
+            draw_canvas()
+
+        return inner
 
     for city, coords in cities_data.items():
-        draw_oval(coords["x"], coords["y"], 10, "#FF0000", 1)
+        oval = draw_oval(coords["x"], coords["y"], 10, "#FF0000", 1)
+        canvas.tag_bind(oval, "<Button-1>", on_city_click(city))
+
+        global clicked_city
+        if clicked_city == city:
+            canvas.create_text(coords["x"], coords["y"] - 15, text=city, fill="#000000")
 
     for coords in highlighted:
         draw_oval(coords["x"], coords["y"], 15, "#0000FF", 3)
